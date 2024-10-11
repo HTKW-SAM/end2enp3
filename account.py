@@ -2,16 +2,14 @@ import streamlit as st
 import firebase_admin 
 from firebase_admin import credentials
 from firebase_admin import auth
-import os
+import json
 from dotenv import load_dotenv
 
-load_dotenv()
-firebase_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-print(firebase_credentials)
-if not firebase_admin._apps:
-    cred = credentials.Certificate(firebase_credentials)
-    firebase_admin.initialize_app(cred)
+firebase_credentials = st.secrets["firebase"]["credentials"]
+cred = credentials.Certificate(json.loads(firebase_credentials))
 
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
 
 
 def app():
