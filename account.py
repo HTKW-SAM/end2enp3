@@ -3,26 +3,30 @@ import firebase_admin
 from firebase_admin import credentials, auth
 import json
 
-# Access Firebase secrets
-firebase_creds = {
-    "type": st.secrets["firebase"]["type"],
-    "project_id": st.secrets["firebase"]["project_id"],
-    "private_key_id": st.secrets["firebase"]["private_key_id"],
-    "private_key": st.secrets["firebase"]["private_key"].replace('\\n', '\n'),
-    "client_email": st.secrets["firebase"]["client_email"],
-    "client_id": st.secrets["firebase"]["client_id"],
-    "auth_uri": st.secrets["firebase"]["auth_uri"],
-    "token_uri": st.secrets["firebase"]["token_uri"],
-    "auth_provider_x509_cert_url": st.secrets["firebase"]["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
-    "universe_domain": st.secrets["firebase"]["universe_domain"]
-}
+# Accessing credentials from secrets
+client_email = st.secrets["credentials"]["client_email"]
+private_key = st.secrets["credentials"]["private_key"]
 
-# Initialize Firebase Admin
+# Initialize Firebase Admin with the credentials
+import firebase_admin
+from firebase_admin import credentials
+
+# Convert private_key to a format that Firebase expects
+cred = credentials.Certificate({
+    "type": "service_account",
+    "project_id": "methiong",
+    "private_key_id": "6db79f6eb23d2252392603c6f8c7459061ea84c9",
+    "private_key": private_key,
+    "client_email": client_email,
+    "client_id": "101174810610348602334",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-9c1d2%40methiong.iam.gserviceaccount.com"
+})
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate(firebase_creds)
     firebase_admin.initialize_app(cred)
-
 
 
 def app():
