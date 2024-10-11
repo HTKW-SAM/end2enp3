@@ -14,19 +14,20 @@ from firebase_admin import credentials
 # Convert private_key to a format that Firebase expects
 cred = credentials.Certificate({
     "type": "service_account",
-    "project_id": "methiong",
-    "private_key_id": "6db79f6eb23d2252392603c6f8c7459061ea84c9",
+    "project_id": "your-project-id",
+    "private_key_id": "your-private-key-id",
     "private_key": private_key,
     "client_email": client_email,
-    "client_id": "101174810610348602334",
+    "client_id": "your-client-id",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-9c1d2%40methiong.iam.gserviceaccount.com"
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-9c1d2%40your-project-id.iam.gserviceaccount.com"
 })
 
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
+
 
 
 def app():
